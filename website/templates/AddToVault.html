@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Add Vault Item{% endblock %}
+
+{% block content %}
+<h1>Add Vault Item</h1>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="attendee_name">Attendee Name:</label>
+        <input type="text" class="form-control" id="name1" name="name1" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="phone_number">Phone Number:</label>
+        <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="item_type">Item Type:</label>
+        <select class="form-control" id="item_type" name="item_type">
+            <option value="Travel Bag">Travel Bag</option>
+            <option value="Back Bag">Back Bag</option>
+            <option value="Plastic Bag">Plastic Bag</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="item_type">Attendee Type:</label>
+        <select class="form-control" id="attendee_type" name="attendee_type">
+            <option value="VIP">VIP</option>
+            <option value="Standard">Standard</option>
+            <option value="Organizer">Organizer</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="color">Color:</label>
+        <input type="text" class="form-control" id="color" name="color" required>
+    </div>
+
+    <div class="form-group">
+        <label for="additional_notes">Additional Notes:</label>
+        <textarea class="form-control" id="additional_notes" name="additional_notes"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Item</button>
+</form>
+
+{% if success %}
+    <script>
+        alert("Locker item added successfully!");
+        // Start timer or any further actions here
+    </script>
+{% endif %}
+
+{% endblock %}

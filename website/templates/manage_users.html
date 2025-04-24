@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <h2 class="mb-4 text-center">👤 Manage Users</h2>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    Add New Admin Or Organizer
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="first_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="first_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select name="role" class="form-control">
+                                <option value="admin">Admin</option>
+                                <option value="organizer">Organizer</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">➕ Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display Admins -->
+    {% if admins %}
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <h4 class="mb-3">📋 Current Admins</h4>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for admin in admins %}
+                        <tr>
+                            <td>{{ admin.id }}</td>
+                            <td>{{ admin.first_name }}</td>
+                            <td>{{ admin.email }}</td>
+                            <td class="text-center">
+                                <form action="{{ url_for('views.delete_admin', id=admin.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this admin?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">🗑️ Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center" role="alert">
+        No admins found.
+    </div>
+    {% endif %}
+
+    <!-- Display Organizers -->
+    {% if organizers %}
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <h4 class="mb-3">📋 Current Organizers</h4>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for organizer in organizers %}
+                        <tr>
+                            <td>{{ organizer.id }}</td>
+                            <td>{{ organizer.first_name }}</td>
+                            <td>{{ organizer.email }}</td>
+                            <td class="text-center">
+                                <form action="{{ url_for('views.delete_organizer', id=organizer.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this organizer?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">🗑️ Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center" role="alert">
+        No organizers found.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

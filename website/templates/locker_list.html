@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Locker List{% endblock %}
+
+{% block content %}
+<h1>Locker List</h1>
+<br />
+<input type="text" id="searchInput" placeholder="Search lockers..." class="form-control mb-3">
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Locker ID</th>
+            <th>Owner Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Item Type</th>
+            <th>Color</th>
+            <th>Cost (EGP)</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>More Details</th>
+        </tr>
+    </thead>
+    <tbody id="lockerTable">
+        {% for locker in lockers %}
+        <tr data-cost="{{ locker.calculated_cost }}">
+            <td>A-{{ locker.id }}</td>
+            <td>{{ locker.name1 }}</td>
+            <td>{{ locker.email }}</td>
+            <td>{{ locker.phone_number }}</td>
+            <td>{{ locker.item_type }}</td>
+            <td>{{ locker.color }}</td>
+            <td class="cost">{{ locker.calculated_cost }}</td>
+            <td>
+                {{ locker.item_status }}
+            </td>
+            <td>{{ locker.time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>
+                <a href="{{ url_for('views.locker_details', locker_id=locker.id) }}" class="btn btn-info">
+                    ➡️
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+// Search logic
+document.getElementById("searchInput").addEventListener("keyup", function () {
+    let filter = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#lockerTable tr");
+    rows.forEach(row => {
+        let text = row.textContent.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+    });
+});
+
+// Status + Payment logic
+document.querySelectorAll(".status").forEach(select => {
+    select.addEventListener("change", function () {
+        let row = this.closest("tr");
+        let paymentCheckbox = row.querySelector(".payment");
+        let costCell = row.querySelector(".cost");
+        let originalCost = row.getAttribute("data-cost");
+
+        if (this.value === "Outside" && !paymentCheckbox.checked) {
+            alert("You must mark the payment as checked before setting the item outside.");
+            this.value = "Inside";  // Reset
+            return;
+        }
+
+        // Cost changes dynamically based on status
+        costCell.textContent = this.value === "Outside" ? "0.00" : originalCost;
+    });
+});
+</script>
+{% endblock %}

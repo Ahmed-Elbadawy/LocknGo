@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br /> <br /> 
+<div align="center">
+    <h1>Locker Details</h1>
+    <br /> 
+    <p><strong>Locker ID:</strong> A-{{ locker.id }}</p>
+    <p><strong>Name:</strong> {{ locker.name1 }}</p>
+    <p><strong>Email:</strong> {{ locker.email }}</p>
+    <p><strong>Phone Number:</strong> {{ locker.phone_number }}</p>
+    <p><strong>Item Type:</strong> {{ locker.item_type }}</p>
+    <p><strong>Color:</strong> {{ locker.color }}</p>
+    <p><strong>Notes:</strong> {{ locker.notes }}</p>
+    <p><strong>Cost:</strong> {{ locker.cost }} EGP/hour</p>
+    <p><strong>Status:</strong> {{ locker.item_status }}</p>
+    <p><strong>Paid:</strong> {{ locker.paid }}</p>
+    <p><strong>Time:</strong> {{ locker.time }}</p>
+</div>
+{% endblock %}
